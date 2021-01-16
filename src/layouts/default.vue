@@ -4,6 +4,8 @@
 
 <script>
 export default {
-    name: 'Home'
+    name: 'Default'
 }
 </script>
+
+<style scoped></style>

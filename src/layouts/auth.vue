@@ -4,6 +4,8 @@
 
 <script>
 export default {
-    name: 'Home'
+    name: 'Auth'
 }
 </script>
+
+<style scoped></style>
