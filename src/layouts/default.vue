@@ -9,4 +9,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.default-layout {
+    padding: 30px 30px 100px;
+    background-color: var(--background-gray);
+    min-height: 100vh;
+}
+</style>

@@ -1,4 +1,5 @@
 import Api from '@/api/api'
+import { ref } from 'vuelidate/lib/validators/common'
 
 export default class ZonesmartApi extends Api {
     constructor() {
@@ -18,5 +19,35 @@ export default class ZonesmartApi extends Api {
             password
         })
         return { access, refresh }
+    }
+
+    /**
+     * @param {string} refresh_token
+     * @return {Promise<{access: string}>}
+     */
+    async refreshToken(refresh_token) {
+        const {
+            data: { access }
+        } = await this.client.post('/auth/jwt/refresh/', {
+            refresh: refresh_token.slice(4)
+        })
+        return { access }
+    }
+
+    /**
+     * @param {number=} limit
+     * @param {number=} offset
+     * @param {string=} search
+     * @return {Promise<OrdersRequest>}
+     */
+    async getOrders(limit, offset, search) {
+        const { data } = await this.client.get('/zonesmart/order/', {
+            params: {
+                limit,
+                offset,
+                search
+            }
+        })
+        return data
     }
 }

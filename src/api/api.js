@@ -27,11 +27,22 @@ export default class Api {
         this.client.interceptors.response.use(
             (r) => r,
             async (error) => {
-                if (error.response.status !== 403) {
-                    console.log(403, 'test')
+                const request = error.config
+                if (error.response.status !== 401) {
                     return Promise.reject(error)
                 }
-                // await store.dispatch('auth/logout')
+
+                if (!request.retry) {
+                    request.retry = true
+                    await store.dispatch('auth/refreshToken')
+                    request.headers.Authorization =
+                        store.state.auth.access_token
+                    return this.client(request)
+                }
+
+                return Promise.reject(error)
+
+                // refresh token
             }
         )
     }

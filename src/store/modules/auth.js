@@ -27,6 +27,20 @@ const Auth = {
             )
             commit('SET_ACCESS_TOKEN', access)
             commit('SET_REFRESH_TOKEN', refresh)
+        },
+        async refreshToken({ commit, dispatch, state }) {
+            try {
+                const { access } = await zonesmartRequest.refreshToken(
+                    state.refresh_token
+                )
+                commit('SET_ACCESS_TOKEN', access)
+            } catch (e) {
+                await dispatch('logout')
+            }
+        },
+        async logout({ commit }) {
+            commit('CLEAR_TOKENS')
+            await this.$router.replace('/auth')
         }
     },
     mutations: {
@@ -45,6 +59,12 @@ const Auth = {
         SET_REFRESH_TOKEN(state, refresh_token) {
             state.refresh_token = refresh_token
             localStorage.setItem('refresh_token', `JWT ${refresh_token}`)
+        },
+        CLEAR_TOKENS(state) {
+            state.access_token = ''
+            state.refresh_token = ''
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
         }
     }
 }
