@@ -1,10 +1,11 @@
-<template>
-    <div></div>
+<template lang="pug">
+    .default-layout
+        router-view
 </template>
 
 <script>
 export default {
-    name: 'Default'
+    name: 'DefaultLayout'
 }
 </script>
 

@@ -1,10 +1,11 @@
-<template>
-    <div class="empty-layout"></div>
+<template lang="pug">
+    .empty-layout
+        router-view
 </template>
 
 <script>
 export default {
-    name: 'Empty'
+    name: 'EmptyLayout'
 }
 </script>
 

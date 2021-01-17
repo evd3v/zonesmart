@@ -9,7 +9,24 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
-    }
+    },
+    {
+        path: '/auth',
+        name: 'Auth',
+        component: () => import('@/components/PathThrough'),
+        redirect: '/auth/login',
+        children: [
+            {
+                path: 'login',
+                name: 'login',
+                component: () => import('@/views/auth/Login'),
+                meta: {
+                    layout: 'auth'
+                }
+            }
+        ]
+    },
+    { path: '*', redirect: '/' }
 ]
 
 const router = new VueRouter({
