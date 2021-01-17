@@ -1,59 +1,50 @@
 import router from '@/router'
+import { zonesmartRequest } from '@/api'
 
 const Auth = {
     namespaced: true,
     state: {
         /** @type {string}
-         * @description User access token */
-        token: localStorage.getItem('token') || '',
-        /** @type {Object}
-         * @description User info
-         * */
-        user: null
+         * @description User access token
+         */
+        access_token: localStorage.getItem('access_token') ?? '',
+        /** @type {string}
+         * @description User refresh token
+         */
+        refresh_token: localStorage.getItem('refresh_token') ?? ''
     },
     actions: {
         /**
          * @param commit
-         * @param {string} username
+         * @param {string} email
          * @param {string} password
          * @return {Promise<void>}
          */
-        async login({ commit }, { username, password }) {
-            // const { access_token } = await serviceRequest.login({
-            //     username,
-            //     password,
-            // })
-            // commit('setToken', access_token)
-            // localStorage.setItem('auth_scheme', 'local')
-        },
-        async getProfile({ commit }) {
-            // const profile = await coreRequest.getDoctorProfile()
-            // commit('setUser', profile)
-        },
-        async logout({ commit }) {
-            commit('removeToken')
-            await router.go(0)
+        async login({ commit }, { email, password }) {
+            const { access, refresh } = await zonesmartRequest.login(
+                email,
+                password
+            )
+            commit('SET_ACCESS_TOKEN', access)
+            commit('SET_REFRESH_TOKEN', refresh)
         }
     },
     mutations: {
         /**
          * @param state
-         * @param {string} token
+         * @param {string} access_token
          */
-        setToken(state, token) {
-            state.token = `Bearer ${token}`
-            localStorage.setItem('token', `Bearer ${token}`)
+        SET_ACCESS_TOKEN(state, access_token) {
+            state.access_token = `JWT ${access_token}`
+            localStorage.setItem('access_token', `JWT ${access_token}`)
         },
         /**
          * @param state
-         * @param {Object} profile
+         * @param {string} refresh_token
          */
-        setUser(state, profile) {
-            state.user = { ...profile }
-        },
-        removeToken(state) {
-            state.token = ''
-            localStorage.removeItem('token')
+        SET_REFRESH_TOKEN(state, refresh_token) {
+            state.refresh_token = refresh_token
+            localStorage.setItem('refresh_token', `JWT ${refresh_token}`)
         }
     }
 }
