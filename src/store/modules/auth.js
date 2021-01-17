@@ -27,20 +27,17 @@ const Auth = {
             )
             commit('SET_ACCESS_TOKEN', access)
             commit('SET_REFRESH_TOKEN', refresh)
+            await router.replace('/')
         },
-        async refreshToken({ commit, dispatch, state }) {
-            try {
-                const { access } = await zonesmartRequest.refreshToken(
-                    state.refresh_token
-                )
-                commit('SET_ACCESS_TOKEN', access)
-            } catch (e) {
-                await dispatch('logout')
-            }
+        async refreshToken({ commit, state }) {
+            const { access } = await zonesmartRequest.refreshToken(
+                state.refresh_token
+            )
+            commit('SET_ACCESS_TOKEN', access)
         },
         async logout({ commit }) {
             commit('CLEAR_TOKENS')
-            await this.$router.replace('/auth')
+            await router.replace('/auth')
         }
     },
     mutations: {

@@ -32,6 +32,15 @@ export default class Api {
                     return Promise.reject(error)
                 }
 
+                // if request for refresh token crashed - we make logout for user
+                if (
+                    error.response.status === 401 &&
+                    request.url === '/auth/jwt/refresh/'
+                ) {
+                    await store.dispatch('auth/logout')
+                }
+
+                // refresh token logic
                 if (!request.retry) {
                     request.retry = true
                     await store.dispatch('auth/refreshToken')
@@ -41,8 +50,6 @@ export default class Api {
                 }
 
                 return Promise.reject(error)
-
-                // refresh token
             }
         )
     }
