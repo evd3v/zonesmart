@@ -5,6 +5,9 @@ export const config = {
     baseURL: process.env.VUE_APP_BASE_URL
 }
 
+/**
+ * @description base class for api calls
+ */
 export default class Api {
     constructor(options = {}) {
         this.client = options.client || axios.create(config)
@@ -32,7 +35,7 @@ export default class Api {
                     return Promise.reject(error)
                 }
 
-                // if request for refresh token crashed - we make logout for user
+                // Если запрос по обновлению access_token упал - разлогиниваем пользователя
                 if (
                     error.response.status === 401 &&
                     request.url === '/auth/jwt/refresh/'
@@ -40,8 +43,8 @@ export default class Api {
                     await store.dispatch('auth/logout')
                 }
 
-                // refresh token logic
-                if (!request.retry) {
+                // Обновление access_token (производим в случае, если юзер залогинен и этот запрос первый
+                if (!request.retry && store.state.auth.access_token) {
                     request.retry = true
                     await store.dispatch('auth/refreshToken')
                     request.headers.Authorization =

@@ -19,16 +19,29 @@
                 )
         template(v-if="!is_fetching")
             .table
-                order-table-header(:fields="table_fields" v-model="is_all_orders_selected" :action-bar="Boolean(selected_orders_ids.length)" @print="onPrint")
+                order-table-header(
+                    :fields="table_fields"
+                    v-model="is_all_orders_selected"
+                    :action-bar="Boolean(selected_orders_ids.length)"
+                    @print="onPrint"
+                    )
                 .table-content
-                    order-table-item(v-for="(order, index) in orders.results" v-model="selected_orders[index]" :key="order.id" :order="order")
+                    order-table-item(
+                        v-for="(order, index) in orders.results"
+                        v-model="selected_orders[index]"
+                        :key="order.id"
+                        :order="order"
+                        )
+                        | {{ order }}
             .pagination-container
                 left-arrow-icon(@click="prevPage" :class="{disabled: current_page === 0}")
                 span
-                |   {{limit * current_page}} - {{ limit * (current_page + 1) < orders.count ? limit * (current_page + 1) : orders.count }}
+                    |   {{limit * current_page}}
+                    |   -
+                    |   {{ is_current_page_last ? orders.count : limit * (current_page + 1) }}
                 span
-                |   из {{ orders.count }}
-                right-arrow-icon(@click="nextPage" :class="{disabled: (current_page + 1) * limit > orders.count}")
+                    |   из {{ orders.count }}
+                right-arrow-icon(@click="nextPage" :class="{disabled: is_current_page_last}")
         preloader(v-else big variant="black")
 </template>
 
@@ -64,15 +77,15 @@ export default {
             is_all_orders_selected: false,
             selected_orders: [],
             table_fields: [
-                'ID',
-                'Товары',
-                'Дата заказа',
-                'Статус',
-                'Оплачено',
-                'Доставлено',
-                'Покупатель',
-                'Метод доставки',
-                'Стоимость'
+                { name: 'ID' },
+                { name: 'Товары' },
+                { name: 'Дата заказа' },
+                { name: 'Статус' },
+                { name: 'Оплачено', align: 'center' },
+                { name: 'Доставлено', align: 'center' },
+                { name: 'Покупатель' },
+                { name: 'Метод доставки' },
+                { name: 'Стоимость', align: 'end' }
             ],
             orders: [],
             limit: 10,
@@ -92,6 +105,9 @@ export default {
         },
         selected_orders_ids() {
             return this.selected_orders.filter((order) => order.value)
+        },
+        is_current_page_last() {
+            return (this.current_page + 1) * this.limit >= this.orders.count
         }
     },
     watch: {
@@ -136,6 +152,10 @@ export default {
         },
         onSearch({ data }) {
             this.orders = data
+            this.selected_orders = this.orders.results.map((order) => ({
+                id: order.id,
+                value: false
+            }))
             this.is_fetching = false
         },
         onPrint() {

@@ -11,6 +11,7 @@
 
 <script>
 import IconSearch from '@/assets/images/svg/search.svg?inline'
+
 import BaseInput from '@/components/BaseInput'
 
 export default {
@@ -27,10 +28,6 @@ export default {
         searchFunction: {
             type: Function,
             required: true
-        },
-        limit: {
-            type: Number,
-            default: 10
         },
         params: {
             type: Object,

@@ -29,6 +29,14 @@
       flex: 0 0 calc((100% - 124px) / 9);
       font-size: 12px;
 
+      &[data-align="center"] {
+        justify-content: center;
+      }
+
+      &[data-align="end"] {
+        justify-content: flex-end;
+      }
+
       .field-expand {
         height: 16px;
         margin-right: 5px;

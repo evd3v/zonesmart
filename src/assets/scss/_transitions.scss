@@ -1,0 +1,28 @@
+.slide-enter-active, .slide-leave-active {
+  transition: .3s;
+}
+.slide-enter-to{
+  position: relative;
+  top: 0;
+  right: 0;
+}
+.slide-leave{
+  position: absolute;
+}
+.slide-enter,  {
+  right: -100vw;
+  position: absolute;
+}
+.slide-leave-to {
+  position: absolute;
+  left: -100vw;
+}
+
+.smooth-enter-active, .smooth-leave-active {
+  transition: max-height .3s, padding-top .3s, padding-bottom .3s;
+}
+.smooth-enter, .smooth-leave-to {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}

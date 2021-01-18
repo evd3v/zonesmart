@@ -51,6 +51,7 @@ export default {
 <style lang="scss" scoped>
 .order-table-additional-table {
     width: 100%;
+    max-height: 250px;
     padding: 30px 20px 20px 60px;
     background-color: var(--background-gray);
     .table-content {

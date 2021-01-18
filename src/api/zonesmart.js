@@ -6,22 +6,22 @@ export default class ZonesmartApi extends Api {
     }
 
     /**
-     * @param email
-     * @param password
+     * @param username логин пользователя
+     * @param password пароль пользователя
      * @return {Promise<{access: String, refresh: String}>}
      */
-    async login(email, password) {
+    async login(username, password) {
         const {
             data: { access, refresh }
         } = await this.client.post('/auth/jwt/create/', {
-            email,
+            email: username,
             password
         })
         return { access, refresh }
     }
 
     /**
-     * @param {string} refresh_token
+     * @param {string} refresh_token refresh_token пользователя
      * @return {Promise<{access: string}>}
      */
     async refreshToken(refresh_token) {
@@ -34,9 +34,10 @@ export default class ZonesmartApi extends Api {
     }
 
     /**
-     * @param {number=} limit
-     * @param {number=} offset
-     * @param {string=} search
+     * @param {number=} limit лимит получаемых заказов
+     * @param {number=} offset сдвиг получаемых заказов, от нуля
+     * @param {string=} search строка поиска
+     * @description возвращает список заказов
      * @return {Promise<OrdersRequest>}
      */
     async getOrders({ limit, offset, search }) {

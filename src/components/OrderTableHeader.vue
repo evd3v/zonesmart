@@ -4,10 +4,16 @@
          .field
              base-checkbox(v-model="is_all_fields_selected")
          template(v-if="!actionBar")
-            .field(v-for="(field, index) in fields" :key="index")
-                span {{ field }}
+            .field(
+                v-for="(field, index) in fields"
+                :key="index"
+                :data-align="field.align || ''"
+                )
+                span
+                    |   {{ field.name }}
          .action-bar(v-else)
-            span(@click="onPrint") Распечатать инвойс
+            span(@click="onPrint")
+                |   Распечатать инвойс
 </template>
 
 <script>

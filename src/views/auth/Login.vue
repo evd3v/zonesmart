@@ -3,9 +3,18 @@
         auth-card(:title="login_title")
             .content
                 .field
-                    base-input(v-model="username" placeholder="Email или телефон" :invalid="$v.username.$dirty && $v.username.$invalid")
+                    base-input(
+                        v-model="username"
+                        placeholder="Email или телефон"
+                        :invalid="$v.username.$dirty && $v.username.$invalid"
+                        )
                 .field
-                    base-input(v-model="password" placeholder="Пароль" type="password" :invalid="$v.password.$dirty && $v.password.$invalid")
+                    base-input(
+                        v-model="password"
+                        placeholder="Пароль"
+                        type="password"
+                        :invalid="$v.password.$dirty && $v.password.$invalid"
+                        )
                 .error-message(v-if="error_message") {{ error_message }}
                 .btn-container
                     base-button(label="Войти" @click="loginHandler" :loading="isRequestSending")
@@ -46,7 +55,7 @@ export default {
             try {
                 this.isRequestSending = true
                 await this.login({
-                    email: this.username,
+                    username: this.username,
                     password: this.password
                 })
             } catch (e) {

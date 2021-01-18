@@ -1,6 +1,7 @@
 <template lang="pug">
     .auth-card
-        .title {{title}}
+        .title
+            | {{title}}
         slot
 </template>
 

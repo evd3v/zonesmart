@@ -12,7 +12,7 @@ export default {
     components: { CheckIcon },
     props: {
         value: {
-            type: [Boolean],
+            type: Boolean,
             required: true
         }
     },

@@ -1,7 +1,14 @@
 <template lang="pug">
-    button(class="base-button" @click="clickHandler" :data-small="small" :data-variant="variant" :data-disabled="disabled")
+    button(
+        class="base-button"
+        @click="clickHandler"
+        :data-small="small"
+        :data-variant="variant"
+        :data-disabled="disabled"
+        )
         preloader(v-if="loading")
-        span(v-else) {{ label }}
+        span(v-else)
+            |   {{ label }}
 </template>
 
 <script>

@@ -1,9 +1,8 @@
-<template>
-    <div id="app">
-        <component :is="layout">
-            <router-view />
-        </component>
-    </div>
+<template lang="pug">
+    #app
+        transition(name="slide")
+            component(:is="layout")
+                router-view
 </template>
 
 <script>

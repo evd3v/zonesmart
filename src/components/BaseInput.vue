@@ -1,8 +1,10 @@
 <template lang="pug">
     .base-input(:class="{'fixed-placeholder': is_placeholder_fixed}" :data-invalid="invalid")
         input(v-model="input_value" :type="input_type" @focus="focusHandler" @blur="blurHandler")
-        .error-message(v-if="invalid") Введено некорректное значение
-        .placeholder {{ placeholder }}
+        .error-message(v-if="invalid")
+            |   Введено некорректное значение
+        .placeholder
+            |   {{ placeholder }}
         .toggle-password-visibility(v-if="type === 'password'" @click="togglePasswordVisibility")
             component(:is="password_component")
 </template>
