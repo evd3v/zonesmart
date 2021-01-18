@@ -1,5 +1,4 @@
 import Api from '@/api/api'
-import { ref } from 'vuelidate/lib/validators/common'
 
 export default class ZonesmartApi extends Api {
     constructor() {
@@ -40,7 +39,7 @@ export default class ZonesmartApi extends Api {
      * @param {string=} search
      * @return {Promise<OrdersRequest>}
      */
-    async getOrders(limit, offset, search) {
+    async getOrders({ limit, offset, search }) {
         const { data } = await this.client.get('/zonesmart/order/', {
             params: {
                 limit,
